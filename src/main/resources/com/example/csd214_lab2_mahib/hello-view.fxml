@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="657.0" prefWidth="865.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.example.csd214_lab2_mahib.HelloController">
+<VBox alignment="CENTER" prefHeight="690.0" prefWidth="865.0" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csd214_lab2_mahib.HelloController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
@@ -23,17 +23,17 @@
                </font>
             </Label>
             <Label layoutX="299.0" layoutY="86.0" text="ID" />
-            <TextField layoutX="379.0" layoutY="82.0" />
+            <TextField layoutX="379.0" layoutY="82.0" promptText="Book Id" />
             <Label layoutX="298.0" layoutY="120.0" text="Book Name" />
-            <TextField layoutX="379.0" layoutY="116.0" />
+            <TextField layoutX="379.0" layoutY="116.0" promptText="Book Name" />
             <Label layoutX="299.0" layoutY="156.0" text="Author Name" />
-            <TextField layoutX="379.0" layoutY="152.0" />
+            <TextField layoutX="379.0" layoutY="152.0" promptText="Author Name" />
             <Label layoutX="300.0" layoutY="192.0" text="Publisher" />
-            <TextField layoutX="379.0" layoutY="188.0" />
+            <TextField layoutX="379.0" layoutY="188.0" promptText="Publisher" />
             <Label layoutX="300.0" layoutY="232.0" text="Price" />
-            <TextField layoutX="379.0" layoutY="228.0" />
+            <TextField layoutX="379.0" layoutY="228.0" promptText="Price" />
             <Label layoutX="299.0" layoutY="268.0" text="Quantity" />
-            <TextField layoutX="379.0" layoutY="264.0" />
+            <TextField layoutX="379.0" layoutY="264.0" promptText="Quantity" />
             <Button layoutX="291.0" layoutY="308.0" mnemonicParsing="false" text="Insert" />
             <Button layoutX="363.0" layoutY="308.0" mnemonicParsing="false" text="Read" />
             <Button layoutX="430.0" layoutY="308.0" mnemonicParsing="false" text="Update" />
@@ -50,5 +50,6 @@
             </TableView>
          </children>
       </Pane>
+      <Label prefHeight="18.0" prefWidth="462.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </VBox>
