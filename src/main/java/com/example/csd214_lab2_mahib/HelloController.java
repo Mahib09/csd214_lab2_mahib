@@ -60,6 +60,9 @@ public class HelloController implements Initializable {
     @FXML protected void onReadButtonClicked() {
         populateTable();
     }
+    @FXML protected void onInsertButtonClicked(){ insertData(); }
+    @FXML protected void onUpdateButtonClicked() { updateData(); }
+    @FXML protected void onDeleteButtonClicked(){ deleteData();}
     public void populateTable() {
         list.clear();
         try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
@@ -76,8 +79,7 @@ public class HelloController implements Initializable {
                 tblView.getItems().add(new BooksInventoryRecords(tblId,tblName,tblAuthor,tblPublisher,tblPrice,tblQuantity));
             }     } catch (SQLException e) {
             e.printStackTrace();     }
-}
-    @FXML protected void onInsertButtonClicked(){insertData();}
+    }
     public void insertData(){
     try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
         String query = "INSERT INTO books ( bookName, author, publisher, price, quantity) VALUES ('"+fieldName.getText()+"','"+fieldAuthor.getText()+"','"+fieldPublisher.getText()+"','"+fieldPrice.getText()+"','"+fieldQuantity.getText()+"')";
@@ -86,11 +88,24 @@ public class HelloController implements Initializable {
         populateTable();
     } catch (SQLException e) {
         e.printStackTrace();     }
-        }
-    @FXML protected void onUpdateButtonClicked() {
-
-}
-    @FXML protected void onDeleteButtonClicked(){
-
     }
+    public void updateData(){
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+            String query = ("UPDATE books SET bookName='" + fieldName.getText() + "',author='" + fieldAuthor.getText() + "',publisher='" + fieldPublisher.getText() + "',price='" + fieldPrice.getText() + "',quantity='" + fieldQuantity.getText() + "'WHERE bookid='" + fieldId.getText() + "'");
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+            populateTable();
+        } catch (SQLException e) {
+            e.printStackTrace();     }
+    }
+    public void deleteData(){
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+            String query = "INSERT INTO books ( bookName, author, publisher, price, quantity) VALUES ('"+fieldName.getText()+"','"+fieldAuthor.getText()+"','"+fieldPublisher.getText()+"','"+fieldPrice.getText()+"','"+fieldQuantity.getText()+"')";
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+            populateTable();
+        } catch (SQLException e) {
+            e.printStackTrace();     }
+    }
+
 }
