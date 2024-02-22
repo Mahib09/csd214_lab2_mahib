@@ -100,7 +100,7 @@ public class HelloController implements Initializable {
     }
     public void deleteData(){
         try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
-            String query = "INSERT INTO books ( bookName, author, publisher, price, quantity) VALUES ('"+fieldName.getText()+"','"+fieldAuthor.getText()+"','"+fieldPublisher.getText()+"','"+fieldPrice.getText()+"','"+fieldQuantity.getText()+"')";
+            String query = ("DELETE FROM books WHERE bookid='"+fieldId.getText()+"'");
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
             populateTable();
