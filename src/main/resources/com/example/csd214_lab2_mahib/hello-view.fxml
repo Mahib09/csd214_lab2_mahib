@@ -17,39 +17,39 @@
    <children>
       <Pane prefHeight="616.0" prefWidth="826.0">
          <children>
-            <Label layoutX="248.0" layoutY="29.0" text="Inventory Management System">
+            <Label fx:id="welcomeText" layoutX="248.0" layoutY="29.0" text="Inventory Management System">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
             <Label layoutX="299.0" layoutY="86.0" text="ID" />
-            <TextField layoutX="379.0" layoutY="82.0" promptText="Book Id" />
+            <TextField fx:id="fieldId" layoutX="379.0" layoutY="82.0" promptText="Book Id" />
             <Label layoutX="298.0" layoutY="120.0" text="Book Name" />
-            <TextField layoutX="379.0" layoutY="116.0" promptText="Book Name" />
+            <TextField fx:id="fieldName" layoutX="379.0" layoutY="116.0" promptText="Book Name" />
             <Label layoutX="299.0" layoutY="156.0" text="Author Name" />
-            <TextField layoutX="379.0" layoutY="152.0" promptText="Author Name" />
+            <TextField fx:id="fieldAuthor" layoutX="379.0" layoutY="152.0" promptText="Author Name" />
             <Label layoutX="300.0" layoutY="192.0" text="Publisher" />
-            <TextField layoutX="379.0" layoutY="188.0" promptText="Publisher" />
+            <TextField fx:id="fieldPublisher" layoutX="379.0" layoutY="188.0" promptText="Publisher" />
             <Label layoutX="300.0" layoutY="232.0" text="Price" />
-            <TextField layoutX="379.0" layoutY="228.0" promptText="Price" />
+            <TextField fx:id="fieldPrice" layoutX="379.0" layoutY="228.0" promptText="Price" />
             <Label layoutX="299.0" layoutY="268.0" text="Quantity" />
-            <TextField layoutX="379.0" layoutY="264.0" promptText="Quantity" />
-            <Button layoutX="291.0" layoutY="308.0" mnemonicParsing="false" text="Insert" />
-            <Button layoutX="363.0" layoutY="308.0" mnemonicParsing="false" text="Read" />
-            <Button layoutX="430.0" layoutY="308.0" mnemonicParsing="false" text="Update" />
-            <Button layoutX="499.0" layoutY="308.0" mnemonicParsing="false" text="Delete" />
-            <TableView layoutX="17.0" layoutY="349.0" prefHeight="268.0" prefWidth="791.0">
+            <TextField fx:id="fieldQuantity" layoutX="379.0" layoutY="264.0" promptText="Quantity" />
+            <Button fx:id="btnInsert" layoutX="356.0" layoutY="308.0" mnemonicParsing="false" onAction="#onInsertButtonClicked" text="Insert" />
+            <Button fx:id="btnRead" layoutX="263.0" layoutY="308.0" mnemonicParsing="false" onAction="#onReadButtonClicked" text="Load Data" />
+            <Button fx:id="btnUpdate" layoutX="430.0" layoutY="308.0" mnemonicParsing="false" onAction="#onUpdateButtonClicked" text="Update" />
+            <Button fx:id="btnDelete" layoutX="499.0" layoutY="308.0" mnemonicParsing="false" onAction="#onDeleteButtonClicked" text="Delete" />
+            <TableView fx:id="tblView" layoutX="17.0" layoutY="349.0" prefHeight="268.0" prefWidth="791.0">
               <columns>
-                <TableColumn prefWidth="76.00000381469727" text="Id" />
-                <TableColumn prefWidth="253.59996032714844" text="Book Name" />
-                  <TableColumn minWidth="5.60003662109375" prefWidth="195.20001220703125" text="Author" />
-                  <TableColumn prefWidth="118.39996337890625" text="Publisher" />
-                  <TableColumn minWidth="8.0" prefWidth="71.199951171875" text="Price" />
-                  <TableColumn prefWidth="82.4000244140625" text="Quantity" />
+                <TableColumn fx:id="tblColId" prefWidth="76.00000381469727" text="Id" />
+                <TableColumn fx:id="tblColName" prefWidth="253.59996032714844" text="Book Name" />
+                  <TableColumn fx:id="tblColAuthor" minWidth="5.60003662109375" prefWidth="195.20001220703125" text="Author" />
+                  <TableColumn fx:id="tblColPublisher" prefWidth="118.39996337890625" text="Publisher" />
+                  <TableColumn fx:id="tblColPrice" minWidth="8.0" prefWidth="71.199951171875" text="Price" />
+                  <TableColumn fx:id="tblColQuantity" prefWidth="82.4000244140625" text="Quantity" />
               </columns>
             </TableView>
          </children>
       </Pane>
-      <Label prefHeight="18.0" prefWidth="462.0" textAlignment="CENTER" textFill="RED" />
+      <Label fx:id="lblMessage" prefHeight="18.0" prefWidth="462.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </VBox>

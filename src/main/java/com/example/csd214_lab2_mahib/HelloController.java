@@ -1,14 +1,96 @@
 package com.example.csd214_lab2_mahib;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class HelloController {
-    @FXML
-    private Label welcomeText;
+import java.net.URL;
+import java.sql.*;
+import java.util.ResourceBundle;
 
+public class HelloController implements Initializable {
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private TextField fieldId;
+    @FXML
+    private TextField fieldName;
+    @FXML
+    private TextField fieldAuthor;
+    @FXML
+    private TextField fieldPublisher;
+    @FXML
+    private TextField fieldPrice;
+    @FXML
+    private TextField fieldQuantity;
+    @FXML
+    private TableView<BooksInventoryRecords> tblView;
+    @FXML
+    private TableColumn<BooksInventoryRecords,Integer > tblColId;
+    @FXML
+    private TableColumn<BooksInventoryRecords, String> tblColName;
+    @FXML
+    private TableColumn<BooksInventoryRecords,String> tblColAuthor;
+    @FXML
+    private TableColumn<BooksInventoryRecords,String> tblColPublisher;
+    @FXML
+    private TableColumn<BooksInventoryRecords,Float > tblColPrice;
+    @FXML
+    private TableColumn<BooksInventoryRecords,Integer > tblColQuantity;
+    ObservableList<BooksInventoryRecords> list = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        tblColId.setCellValueFactory(new PropertyValueFactory<BooksInventoryRecords,Integer>("bookid"));
+        tblColName.setCellValueFactory(new PropertyValueFactory<BooksInventoryRecords,String>("bookName"));
+        tblColAuthor.setCellValueFactory(new PropertyValueFactory<BooksInventoryRecords,String>("author"));
+        tblColPublisher.setCellValueFactory(new PropertyValueFactory<BooksInventoryRecords,String>("publisher"));
+        tblColPrice.setCellValueFactory(new PropertyValueFactory<BooksInventoryRecords,Float>("price"));
+        tblColQuantity.setCellValueFactory(new PropertyValueFactory<BooksInventoryRecords,Integer>("quantity"));
+        tblView.setItems(list);
+    }
+   String jdbcUrl = "jdbc:mysql://localhost:3306/csd214_mahib_lab2";
+    String dbUser = "root";
+    String dbPassword = "";
+
+    @FXML protected void onReadButtonClicked() {
+        populateTable();
+    }
+    public void populateTable() {
+        list.clear();
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+            String query = "SELECT * FROM books";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                int tblId = resultSet.getInt("bookid");
+                String tblName = resultSet.getString("bookName");
+                String tblAuthor = resultSet.getString("author");
+                String tblPublisher = resultSet.getString("publisher");
+                Float tblPrice = resultSet.getFloat("price");
+                int tblQuantity = resultSet.getInt("quantity");
+                tblView.getItems().add(new BooksInventoryRecords(tblId,tblName,tblAuthor,tblPublisher,tblPrice,tblQuantity));
+            }     } catch (SQLException e) {
+            e.printStackTrace();     }
+}
+    @FXML protected void onInsertButtonClicked(){insertData();}
+    public void insertData(){
+    try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+        String query = "INSERT INTO books ( bookName, author, publisher, price, quantity) VALUES ('"+fieldName.getText()+"','"+fieldAuthor.getText()+"','"+fieldPublisher.getText()+"','"+fieldPrice.getText()+"','"+fieldQuantity.getText()+"')";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(query);
+        populateTable();
+    } catch (SQLException e) {
+        e.printStackTrace();     }
+        }
+    @FXML protected void onUpdateButtonClicked() {
+
+}
+    @FXML protected void onDeleteButtonClicked(){
+
     }
 }
