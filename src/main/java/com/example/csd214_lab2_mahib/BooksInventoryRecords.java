@@ -8,6 +8,8 @@ private String publisher;
 private float price;
 private int quantity;
 
+private String message;
+
 public BooksInventoryRecords(int bookid, String bookName, String author, String publisher, float price, int quantity){
 this.bookid=bookid;
 this.bookName=bookName;
@@ -15,7 +17,6 @@ this.author=author;
 this.publisher=publisher;
 this.price=price;
 this.quantity=quantity;
-
 }
 
     public int getBookid() {

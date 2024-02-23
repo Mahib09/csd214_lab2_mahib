@@ -28,6 +28,8 @@ public class HelloController implements Initializable {
     @FXML
     private TextField fieldQuantity;
     @FXML
+    private Label lblMessage;
+    @FXML
     private TableView<BooksInventoryRecords> tblView;
     @FXML
     private TableColumn<BooksInventoryRecords,Integer > tblColId;
@@ -63,6 +65,7 @@ public class HelloController implements Initializable {
     @FXML protected void onInsertButtonClicked(){ insertData(); }
     @FXML protected void onUpdateButtonClicked() { updateData(); }
     @FXML protected void onDeleteButtonClicked(){ deleteData();}
+    @FXML protected void onLoadButtonClicked(){loadData();}
     public void populateTable() {
         list.clear();
         try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
@@ -81,31 +84,73 @@ public class HelloController implements Initializable {
             e.printStackTrace();     }
     }
     public void insertData(){
-    try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
-        String query = "INSERT INTO books ( bookName, author, publisher, price, quantity) VALUES ('"+fieldName.getText()+"','"+fieldAuthor.getText()+"','"+fieldPublisher.getText()+"','"+fieldPrice.getText()+"','"+fieldQuantity.getText()+"')";
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(query);
-        populateTable();
-    } catch (SQLException e) {
-        e.printStackTrace();     }
+        if(fieldName.getText().isEmpty()){
+            lblMessage.setText("Name Required to Insert");
+        }else{
+            try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+                String query = "INSERT INTO books ( bookName, author, publisher, price, quantity) VALUES ('"+fieldName.getText()+"','"+fieldAuthor.getText()+"','"+fieldPublisher.getText()+"','"+fieldPrice.getText()+"','"+fieldQuantity.getText()+"')";
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(query);
+                populateTable();
+                clearForm();
+            } catch (SQLException e) {
+                e.printStackTrace();     }
+        }
+
     }
     public void updateData(){
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
-            String query = ("UPDATE books SET bookName='" + fieldName.getText() + "',author='" + fieldAuthor.getText() + "',publisher='" + fieldPublisher.getText() + "',price='" + fieldPrice.getText() + "',quantity='" + fieldQuantity.getText() + "'WHERE bookid='" + fieldId.getText() + "'");
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
-            populateTable();
-        } catch (SQLException e) {
-            e.printStackTrace();     }
+        if(fieldId.getText().isEmpty()){
+            lblMessage.setText("Please Enter Id to Update");
+        }else{
+            try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+                String query = ("UPDATE books SET bookName='" + fieldName.getText() + "',author='" + fieldAuthor.getText() + "',publisher='" + fieldPublisher.getText() + "',price='" + fieldPrice.getText() + "',quantity='" + fieldQuantity.getText() + "'WHERE bookid='" + fieldId.getText() + "'");
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(query);
+                populateTable();
+                clearForm();
+            } catch (SQLException e) {
+                e.printStackTrace();     }
+        }
+
     }
     public void deleteData(){
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+        if(fieldId.getText().isEmpty()){
+            lblMessage.setText("Please Enter Id to Delete");
+        }else{ try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
             String query = ("DELETE FROM books WHERE bookid='"+fieldId.getText()+"'");
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
             populateTable();
+            clearForm();
         } catch (SQLException e) {
-            e.printStackTrace();     }
-    }
+            e.printStackTrace();     }}
 
+    }
+    public void loadData(){
+        if(fieldId.getText().isEmpty()){
+            lblMessage.setText("Please Enter Id to Load");
+        }else{try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
+            String query = ("SELECT * FROM books WHERE bookid='"+fieldId.getText()+"'");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            resultSet.next();
+            fieldName.setText(resultSet.getString("bookName"));
+            fieldAuthor.setText(resultSet.getString("author"));
+            fieldPublisher.setText(resultSet.getString("publisher"));
+            fieldPrice.setText(resultSet.getString("price"));
+            fieldQuantity.setText(resultSet.getString("quantity"));
+        } catch (SQLException e) {
+            e.printStackTrace();     }}
+
+    }
+    public void clearForm(){
+        fieldId.setText("");
+        fieldName.setText("");
+        fieldAuthor.setText("");
+        fieldPublisher.setText("");
+        fieldPrice.setText("");
+        fieldQuantity.setText("");
+        lblMessage.setText("");
+    }
 }
+
